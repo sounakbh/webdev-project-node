@@ -27,10 +27,10 @@ const session = require("express-session");
 const PROTOCOL = "mongodb+srv";
 const DB_USERNAME = process.env.DB_USERNAME
   ? process.env.DB_USERNAME
-  : "sounakbh"; //process.env.DB_USERNAME;
+  : "sounakbh";
 const DB_PASSWORD = process.env.DB_PASSWORD
   ? process.env.DB_PASSWORD
-  : "newpassword"; //process.env.DB_PASSWORD;
+  : "newpassword";
 const HOST = "cluster0.fv8ys.mongodb.net";
 const DB_NAME = "myFirstDatabase";
 const DB_QUERY = "retryWrites=true&w=majority";
@@ -53,7 +53,6 @@ app.use(
 );
 
 let sess = {
-  //   secret: process.env.EXPRESS_SESSION_SECRET,
   secret: process.env.EXPRESS_SESSION_SECRET
     ? process.env.EXPRESS_SESSION_SECRET
     : "Ssdsd@#e$#Rfe@#$d#$#",
