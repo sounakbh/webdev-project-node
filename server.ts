@@ -25,17 +25,19 @@ const session = require("express-session");
 
 // build the connection string
 const PROTOCOL = "mongodb+srv";
-const DB_USERNAME = process.env.DB_USERNAME;
-const DB_PASSWORD = process.env.DB_PASSWORD;
-const HOST = "cluster0.m8jeh.mongodb.net";
+const DB_USERNAME = process.env.DB_USERNAME
+  ? process.env.DB_USERNAME
+  : "sounakbh"; //process.env.DB_USERNAME;
+const DB_PASSWORD = process.env.DB_PASSWORD
+  ? process.env.DB_PASSWORD
+  : "newpassword"; //process.env.DB_PASSWORD;
+const HOST = "cluster0.fv8ys.mongodb.net";
 const DB_NAME = "myFirstDatabase";
 const DB_QUERY = "retryWrites=true&w=majority";
 const connectionString = `${PROTOCOL}://${DB_USERNAME}:${DB_PASSWORD}@${HOST}/${DB_NAME}?${DB_QUERY}`; // connect to the database
 
 mongoose
-  .connect(
-    "mongodb+srv://sounakbh:newpassword@cluster0.fv8ys.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
-  )
+  .connect(connectionString)
   .then((_) => console.log("Connected!"))
   .catch((e) => console.log("Auth failed"));
 
@@ -44,13 +46,17 @@ app.use(
   cors({
     credentials: true,
     // origin: process.env.CORS_ORIGIN,
-    origin: "http://localhost:3000",
+    origin: process.env.CORS_ORIGIN
+      ? process.env.CORS_ORIGIN
+      : "http://localhost:3000",
   })
 );
 
 let sess = {
   //   secret: process.env.EXPRESS_SESSION_SECRET,
-  secret: "Ssdsd@#e$#Rfe@#$d#$#",
+  secret: process.env.EXPRESS_SESSION_SECRET
+    ? process.env.EXPRESS_SESSION_SECRET
+    : "Ssdsd@#e$#Rfe@#$d#$#",
   saveUninitialized: true,
   resave: true,
   cookie: {
