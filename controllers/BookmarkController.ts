@@ -21,9 +21,6 @@ export default class BookmarkController implements BookmarkControllerI {
 
 
     addBookmark(req: Request, res: Response) {
-        console.log("Inside addbookmark");
-        console.log("userId: ", req.body.userId);
-        console.log("movieId: ", req.body.movieId);
         // @ts-ignore
         // @ts-ignore
         let userId = req.body.userId ===  req.session['profile'].username?
@@ -50,8 +47,6 @@ export default class BookmarkController implements BookmarkControllerI {
     }
 
     deleteBookmark(req: Request, res: Response) {
-        console.log("Inside Delete")
-        console.log(req.params.uid, req.params.movieId);
         // @ts-ignore
         let userId = req.params.uid ===  req.session['profile'].username?
             // @ts-ignore
