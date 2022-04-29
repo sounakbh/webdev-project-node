@@ -18,7 +18,9 @@ export default class MovieLikeDao implements MovieLikeDaoI {
             .exec();
     findAllMoviesLikedByUser = async (uid: string): Promise<MovieLike[]> =>
         MovieLikeModel
-            .find({likedBy: uid});
+            .find({likedBy: uid})
+            .populate("movie")
+            .exec();
     userLikesMovie = async (uid: string, mid: string): Promise<any> =>
         MovieLikeModel.create({movie: mid, likedBy: uid});
     findUserLikesMovie = async (uid: string, mid: string): Promise<any> =>

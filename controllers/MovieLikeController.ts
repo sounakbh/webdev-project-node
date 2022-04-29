@@ -36,7 +36,7 @@ export default class MovieLikeController implements MovieLikeControllerI {
     public static getInstance = (app: Express): MovieLikeController => {
         if(MovieLikeController.movieLikeController === null) {
             MovieLikeController.movieLikeController = new MovieLikeController();
-            app.get("/api/users/:uid/movies", MovieLikeController.movieLikeController.findAllMoviesLikedByUser);
+            app.get("/api/users/:uid/movies", MovieLikeController.movieLikeController.findAllOmdbMoviesLikedByUser);
             app.get("/api/movies/:mid/likes", MovieLikeController.movieLikeController.findAllUsersThatLikedMovie);
             app.put("/api/movies/users/:uid/likes/:movieId", MovieLikeController.movieLikeController.userTogglesMovieLikes);
         }
@@ -63,7 +63,7 @@ export default class MovieLikeController implements MovieLikeControllerI {
      * @param {Response} res Represents response to client, including the
      * body formatted as JSON arrays containing the tuit objects that were liked
      */
-    findAllMoviesLikedByUser = (req: Request, res: Response) => {
+    findAllOmdbMoviesLikedByUser = (req: Request, res: Response) => {
         const uid = req.params.uid;
         // @ts-ignore
         const profile = req.session['profile'];
@@ -71,13 +71,13 @@ export default class MovieLikeController implements MovieLikeControllerI {
             profile._id : uid;
 
         MovieLikeController.movieLikeDao.findAllMoviesLikedByUser(userId)
-            .then(likes => {
+            .then(async likes => {
                 const likesNonNullMovies = likes.filter(like => like.movie);
                 const moviesFromLikes = likesNonNullMovies.map(like => like.movie);
-                res.json(moviesFromLikes);
+                const finalMovies = moviesFromLikes.map((item) => item.movieId);
+                res.json(finalMovies);
             });
     }
-
 
     /**
      * @param {Request} req Represents request from client, including the
@@ -123,9 +123,10 @@ export default class MovieLikeController implements MovieLikeControllerI {
                 selectedMovie.stats.likes = howManyLikedMovie + 1;
             }
             await movieDao.updateLikes(mid, selectedMovie.stats);
-            res.sendStatus(200);
+            console.log(selectedMovie);
+            res.json(selectedMovie);
         } catch (e) {
-            res.sendStatus(404);
+            res.sendStatus(404).send("Error in toggling likes!");
         }
     }
 };
