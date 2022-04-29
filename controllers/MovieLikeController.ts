@@ -52,9 +52,10 @@ export default class MovieLikeController implements MovieLikeControllerI {
      * @param {Response} res Represents response to client, including the
      * body formatted as JSON arrays containing the user objects
      */
-    findAllUsersThatLikedMovie = (req: Request, res: Response) =>
+    findAllUsersThatLikedMovie = (req: Request, res: Response) => {
         MovieLikeController.movieLikeDao.findAllUsersThatLikedMovie(req.params.mid)
             .then(likes => res.json(likes));
+    }
 
     /**
      * Retrieves all tuits liked by a user from the database
@@ -68,7 +69,12 @@ export default class MovieLikeController implements MovieLikeControllerI {
         // @ts-ignore
         const profile = req.session['profile'];
         const userId = uid === "me" && profile ?
-            profile._id : uid;
+            profile._id : null;
+
+        if (userId === null) {
+            res.status(503).send("User needs to be logged in!")
+            return;
+        }
 
         MovieLikeController.movieLikeDao.findAllMoviesLikedByUser(userId)
             .then(async likes => {
@@ -97,7 +103,12 @@ export default class MovieLikeController implements MovieLikeControllerI {
         // @ts-ignore
         const profile = req.session['profile'];
         const userId = uid === "me" && profile ?
-            profile._id : uid;
+            profile._id : null;
+        if (userId === null) {
+            res.status(503).send("User needs to be logged in!")
+            return;
+        }
+
         try {
             const movie = await movieDao.findMovieByOmdbId(movieId);
             if(movie){
