@@ -1,5 +1,5 @@
 /**
- * @file Implements DAO managing data storage of tuits. Uses mongoose TuitModel
+ * @file Implements DAO managing data storage of tuits. Uses mongoose MovieModel
  * to integrate with MongoDB
  */
 import TuitModel from "../mongoose/tuits/TuitModel";

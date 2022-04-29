@@ -20,7 +20,10 @@ import SessionController from "./controllers/SessionController";
 import AuthenticationController from "./controllers/AuthenticationController";
 import mongoose from "mongoose";
 import GroupController from "./controllers/GroupController";
+import MovieController from "./controllers/MovieController";
+import MovieLikeController from "./controllers/MovieLikeController";
 import BookmarkController from "./controllers/BookmarkController";
+
 const cors = require("cors");
 const session = require("express-session");
 
@@ -84,7 +87,10 @@ const userController = UserController.getInstance(app);
 const tuitController = TuitController.getInstance(app);
 const likesController = LikeController.getInstance(app);
 const dislikeController = DislikeController.getInstance(app);
+const movieController = MovieController.getInstance(app);
+const movieLikeController = MovieLikeController.getInstance(app);
 const bookmarkController = BookmarkController.getInstance(app);
+
 SessionController(app);
 AuthenticationController(app);
 GroupController(app);

@@ -10,7 +10,7 @@ test('Algorithm correctly selects latest tuits', () => {
     const SIZE = 100;
     // for(let i=0; i<SIZE; i++) {
     //    
-    //     const newTuit: Tuit = {
+    //     const newTuit: Movie = {
     //        
     //     }
     // }
