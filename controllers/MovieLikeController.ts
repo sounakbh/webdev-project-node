@@ -37,6 +37,7 @@ export default class MovieLikeController implements MovieLikeControllerI {
             app.get("/api/users/:uid/movies/likes", MovieLikeController.movieLikeController.findAllOmdbMoviesLikedByUser);
             app.get("/api/movies/:mid/likes", MovieLikeController.movieLikeController.findAllUsersThatLikedMovie);
             app.put("/api/movies/users/:uid/likes/:movieId", MovieLikeController.movieLikeController.userTogglesMovieLikes);
+            app.get("/api/likes/movies",MovieLikeController.movieLikeController.topLikedMovies);
         }
         return MovieLikeController.movieLikeController;
     }
@@ -136,5 +137,17 @@ export default class MovieLikeController implements MovieLikeControllerI {
         } catch (e) {
             res.sendStatus(404).send("Error in toggling likes!");
         }
+    }
+
+    /**
+     * Retrieves all users that liked a tuit from the database
+     * @param {Request} req Represents request from client, including the path
+     * parameter tid representing the liked tuit
+     * @param {Response} res Represents response to client, including the
+     * body formatted as JSON arrays containing the user objects
+     */
+    topLikedMovies = (req: Request, res: Response) => {
+        MovieLikeController.movieDao.findMostLikedMovies(3)
+            .then(likes => res.json(likes.movieId));
     }
 };
