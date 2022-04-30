@@ -38,6 +38,7 @@ export default class MovieDislikeController implements MovieDislikeControllerI {
             app.get("/api/users/:uid/movies/dislikes", MovieDislikeController.movieDislikeController.findAllOmdbMoviesDislikedByUser);
             app.get("/api/movies/:mid/dislikes", MovieDislikeController.movieDislikeController.findAllUsersThatDislikedMovie);
             app.put("/api/movies/users/:uid/dislikes/:movieId", MovieDislikeController.movieDislikeController.userTogglesMovieDislikes);
+            app.get("/api/dislikes/movies",MovieDislikeController.movieDislikeController.topDislikedMovies);
         }
         return MovieDislikeController.movieDislikeController;
     }
@@ -138,5 +139,17 @@ export default class MovieDislikeController implements MovieDislikeControllerI {
         } catch (e) {
             res.sendStatus(404).send("Error in toggling likes!");
         }
+    }
+
+    /**
+     * Retrieves all users that liked a tuit from the database
+     * @param {Request} req Represents request from client, including the path
+     * parameter tid representing the liked tuit
+     * @param {Response} res Represents response to client, including the
+     * body formatted as JSON arrays containing the user objects
+     */
+    topDislikedMovies = (req: Request, res: Response) => {
+        MovieDislikeController.movieDao.findMostDislikedMovies(3)
+            .then(dislikes => res.json(dislikes));
     }
 };

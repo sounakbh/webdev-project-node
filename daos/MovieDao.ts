@@ -39,4 +39,8 @@ export default class MovieDao implements MovieDaoI{
         );
     deleteMovie = async (mid: string): Promise<any> =>
         MovieModel.deleteOne({_id: mid});
+    findMostLikedMovies = async (numMovies: number): Promise<any> =>
+        MovieModel.find().sort({'stats.likes': -1}).limit(numMovies);
+    findMostDislikedMovies = async (numMovies: number): Promise<any> =>
+        MovieModel.find().sort({'stats.dislikes': -1}).limit(numMovies);
 }
