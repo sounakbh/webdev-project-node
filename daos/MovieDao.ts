@@ -5,7 +5,6 @@
 import MovieDaoI from "../interfaces/MovieDaoI";
 import MovieModel from "../mongoose/movies/MovieModel";
 import Movie from "../models/movies/Movie";
-import movieModel from "../mongoose/movies/MovieModel";
 
 /**
  * @class MovieDao Implements Data Access Object managing data storage
