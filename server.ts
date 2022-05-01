@@ -11,15 +11,11 @@
  * service
  */
 import express, { Request, Response } from "express";
-import CourseController from "./controllers/CourseController";
 import UserController from "./controllers/UserController";
 import TuitController from "./controllers/TuitController";
-import LikeController from "./controllers/LikeController";
-import DislikeController from "./controllers/DislikeController";
 import SessionController from "./controllers/SessionController";
 import AuthenticationController from "./controllers/AuthenticationController";
 import mongoose from "mongoose";
-import GroupController from "./controllers/GroupController";
 import MovieController from "./controllers/MovieController";
 import MovieLikeController from "./controllers/MovieLikeController";
 import BookmarkController from "./controllers/BookmarkController";
@@ -83,18 +79,14 @@ app.get("/add/:a/:b", (req: Request, res: Response) =>
 );
 
 // create RESTful Web service API
-const courseController = new CourseController(app);
 const userController = UserController.getInstance(app);
 const tuitController = TuitController.getInstance(app);
-const likesController = LikeController.getInstance(app);
-const dislikeController = DislikeController.getInstance(app);
 const movieController = MovieController.getInstance(app);
 const movieLikeController = MovieLikeController.getInstance(app);
 const movieDislikeController = MovieDislikeController.getInstance(app);
 const bookmarkController = BookmarkController.getInstance(app);
 SessionController(app);
 AuthenticationController(app);
-GroupController(app);
 /**
  * Start a server listening at port 4000 locally
  * but use environment variable PORT on Heroku if available.
